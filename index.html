@@ -1,1 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contacto</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f4f7;
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        .contacto {
+            width: 100%;
+            max-width: 500px;
+
+            background: white;
+            padding: 30px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.10);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #222;
+        }
+
+        .descripcion {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            margin-bottom: 18px;
+
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #3478f6;
+            box-shadow: 0 0 0 3px rgba(52, 120, 246, 0.10);
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+            border-radius: 8px;
+
+            background: #3478f6;
+            color: white;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2563d8;
+        }
+
+        .resultado {
+            margin-top: 15px;
+            text-align: center;
+            color: #555;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .contacto {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="contacto">
+
+        <h1>Contacta con nosotros</h1>
+
+        <p class="descripcion">
+            ¿Tienes alguna pregunta? Envíanos un mensaje
+            y nos pondremos en contacto contigo.
+        </p>
+
+        <form id="formulario">
+
+            <label for="nombre">
+                Nombre
+            </label>
+
+            <input
+                type="text"
+                id="nombre"
+                placeholder="Tu nombre"
+                required
+            >
+
+
+            <label for="email">
+                Tu correo electrónico
+            </label>
+
+            <input
+                type="email"
+                id="email"
+                placeholder="ejemplo@gmail.com"
+                required
+            >
+
+
+            <label for="asunto">
+                Asunto
+            </label>
+
+            <input
+                type="text"
+                id="asunto"
+                placeholder="¿En qué podemos ayudarte?"
+                required
+            >
+
+
+            <label for="mensaje">
+                Mensaje
+            </label>
+
+            <textarea
+                id="mensaje"
+                placeholder="Escribe aquí tu mensaje..."
+                required
+            ></textarea>
+
+
+            <button type="submit">
+                Enviar mensaje
+            </button>
+
+        </form>
+
+        <div
+            id="resultado"
+            class="resultado"
+        ></div>
+
+    </div>
+
+
+    <script>
+
+        const formulario =
+            document.getElementById("formulario");
+
+        formulario.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                const nombre =
+                    document.getElementById("nombre").value;
+
+                const email =
+                    document.getElementById("email").value;
+
+                const asunto =
+                    document.getElementById("asunto").value;
+
+                const mensaje =
+                    document.getElementById("mensaje").value;
+
+
+                const destinatario =
+                    "othernetes@gmail.com";
+
+
+                const cuerpo =
+                    "Nombre: " + nombre +
+                    "\nCorreo: " + email +
+                    "\n\nMensaje:\n" +
+                    mensaje;
+
+
+                const enlace =
+                    "mailto:" +
+                    destinatario +
+                    "?subject=" +
+                    encodeURIComponent(asunto) +
+                    "&body=" +
+                    encodeURIComponent(cuerpo);
+
+
+                document.getElementById("resultado").textContent =
+                    "Abriendo tu aplicación de correo...";
+
+
+                window.location.href = enlace;
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>
+
 
