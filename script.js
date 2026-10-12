@@ -10,6 +10,18 @@ const ok = $("ok");
 const msg = $("mensaje");
 const contador = $("contador");
 const MIN_MSG = 10;
+const CORREO_EQUIPO = "othernetes@gmail.com";
+const planb = $("planb");
+
+function mostrarPlanB() {
+    const cuerpo = "Nombre: " + $("nombre").value.trim() +
+                   "\nCorreo: " + $("email").value.trim() +
+                   "\n\n" + msg.value.trim();
+    planb.href = "mailto:" + CORREO_EQUIPO +
+                 "?subject=" + encodeURIComponent($("asunto").value.trim()) +
+                 "&body=" + encodeURIComponent(cuerpo);
+    planb.hidden = false;
+}
 
 msg.addEventListener("input", () => {
     contador.textContent = msg.value.length + " / 2000";
@@ -38,8 +50,9 @@ function mensaje(texto, malo) {
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
     mensaje("");
+    planb.hidden = true;
 
-    if ($("botcheck").checked) return; // bot
+    if ($("botcheck").checked) return mensaje("No se pudo enviar. Recarga la página e inténtalo de nuevo.", true);
 
     const campos = [...form.querySelectorAll("[required]")];
     const primero = campos.filter((el) => !validar(el))[0];
@@ -65,9 +78,13 @@ form.addEventListener("submit", async (e) => {
     btn.classList.add("cargando");
     btn.querySelector(".txt").textContent = "Enviando…";
 
+    const ctl = new AbortController();
+    const corte = setTimeout(() => ctl.abort(), 20000);
+
     try {
         const r = await fetch(ENDPOINT, {
             method: "POST",
+            signal: ctl.signal,
             headers: { "Content-Type": "application/json", "Accept": "application/json" },
             body: JSON.stringify({
                 access_key: ACCESS_KEY,
@@ -81,7 +98,8 @@ form.addEventListener("submit", async (e) => {
                 botcheck: ""
             })
         });
-        const d = await r.json();
+        let d = {};
+        try { d = await r.json(); } catch (_) {}
         if (!r.ok || !d.success) throw new Error(d.message || "Error " + r.status);
 
         try { localStorage.setItem("on_ultimo", Date.now()); } catch (_) {}
@@ -91,9 +109,14 @@ form.addEventListener("submit", async (e) => {
         form.reset();
         contador.textContent = "0 / 2000";
     } catch (err) {
-        mensaje("No se pudo enviar. Inténtalo de nuevo en un momento.", true);
+        const motivo = err.name === "AbortError" ? "tardó demasiado"
+                     : err instanceof TypeError ? "sin conexión o bloqueado por tu red o bloqueador de anuncios"
+                     : err.message;
+        mensaje("No se pudo enviar (" + motivo + ").", true);
+        mostrarPlanB();
         console.error(err);
     } finally {
+        clearTimeout(corte);
         btn.disabled = false;
         btn.classList.remove("cargando");
         btn.querySelector(".txt").textContent = "Enviar mensaje";
@@ -104,5 +127,6 @@ $("otro").addEventListener("click", () => {
     ok.hidden = true;
     form.hidden = false;
     mensaje("");
+    planb.hidden = true;
     $("nombre").focus();
 });

@@ -16,12 +16,15 @@
     --mono: "Cascadia Mono", Consolas, monospace;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
 html { background: var(--bg); }
 
 body {
     min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -34,7 +37,7 @@ body {
 /* ---------- fondo ---------- */
 .escena {
     position: fixed;
-    inset: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     z-index: 0;
     pointer-events: none;
     background:
@@ -45,18 +48,19 @@ body {
 .escena::before {
     content: "";
     position: absolute;
-    inset: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     opacity: .5;
     background-image:
         linear-gradient(rgba(255, 255, 255, .03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, .03) 1px, transparent 1px);
     background-size: 36px 36px;
+    -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
     mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
 }
 .escena::after {
     content: "";
     position: absolute;
-    inset: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, .7));
 }
 .barrido {
@@ -80,6 +84,7 @@ body {
     background: var(--panel);
     border: 1px solid var(--line);
     border-radius: 20px;
+    -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     box-shadow: 0 30px 80px rgba(0, 0, 0, .65), 0 0 0 1px rgba(255, 45, 58, .05);
     animation: entrada .6s cubic-bezier(.2, .7, .2, 1) both;
@@ -179,14 +184,14 @@ h1 span { font-weight: 700; color: var(--red); }
 h2 { font-size: 26px; font-weight: 600; letter-spacing: -.2px; }
 .descripcion { margin: 6px 0 24px; color: var(--muted); font-size: 15px; }
 
-.tipos { border: 0; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.tipos { border: 0; min-width: 0; display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
 .tipos legend { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 10px; }
 .tipos label { cursor: pointer; }
 .tipos input { position: absolute; opacity: 0; pointer-events: none; }
 .tipos span {
     display: block;
-    padding: 8px 18px;
-    font-size: 14px;
+    padding: 11px 20px;
+    font-size: 15px;
     color: var(--muted);
     background: var(--campo);
     border: 1px solid var(--line);
@@ -220,7 +225,7 @@ h2 { font-size: 26px; font-weight: 600; letter-spacing: -.2px; }
     background: var(--campo);
     border: 1px solid var(--line);
     border-radius: 11px;
-    font: 15px var(--ui);
+    font: 16px var(--ui);
     outline: none;
     transition: border-color .2s, box-shadow .2s, background .2s;
 }
@@ -252,7 +257,8 @@ button { font-family: var(--ui); cursor: pointer; }
     position: relative;
     width: 100%;
     margin-top: 14px;
-    padding: 15px 20px;
+    padding: 16px 20px;
+    min-height: 54px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -290,6 +296,17 @@ button { font-family: var(--ui); cursor: pointer; }
 
 .trampa { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
+.planb {
+    display: block;
+    margin-top: 6px;
+    text-align: center;
+    font: 13px var(--mono);
+    color: var(--red-hot);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+.planb[hidden] { display: none; }
+
 /* ---------- éxito ---------- */
 .ok { text-align: center; padding: 70px 10px; animation: entrada .45s ease both; }
 .ok[hidden] { display: none; }
@@ -322,7 +339,7 @@ button { font-family: var(--ui); cursor: pointer; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 860px) {
-    .tarjeta { grid-template-columns: 1fr; max-width: 560px; }
+    .tarjeta { grid-template-columns: 1fr; max-width: 560px; background: rgba(14, 14, 18, .96); -webkit-backdrop-filter: none; backdrop-filter: none; }
     .marca { padding: 30px 28px 26px; border-right: 0; border-bottom: 1px solid var(--line); border-radius: 20px 20px 0 0; }
     .logo { width: 104px; margin-bottom: 16px; }
     h1 { font-size: 32px; }
@@ -332,9 +349,11 @@ button { font-family: var(--ui); cursor: pointer; }
     .contenido { padding: 30px 26px 28px; }
 }
 @media (max-width: 520px) {
-    body { padding: 12px; }
+    body { padding: 12px; padding-left: max(12px, env(safe-area-inset-left)); padding-right: max(12px, env(safe-area-inset-right)); padding-bottom: max(12px, env(safe-area-inset-bottom)); }
     .fila { grid-template-columns: 1fr; gap: 0; }
     .contenido { padding: 26px 18px 24px; }
+    .tipos { gap: 6px; }
+    .tipos span { padding: 11px 15px; }
     h2 { font-size: 23px; }
 }
 @media (prefers-reduced-motion: reduce) {
