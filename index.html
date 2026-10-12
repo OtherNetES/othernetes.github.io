@@ -1,255 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Contacto</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f4f7;
-            min-height: 100vh;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            padding: 20px;
-        }
-
-        .contacto {
-            width: 100%;
-            max-width: 500px;
-
-            background: white;
-            padding: 30px;
-
-            border-radius: 15px;
-
-            box-shadow:
-                0 8px 30px rgba(0, 0, 0, 0.10);
-        }
-
-        h1 {
-            margin-bottom: 10px;
-            color: #222;
-        }
-
-        .descripcion {
-            color: #666;
-            margin-bottom: 25px;
-            line-height: 1.5;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 7px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-
-            padding: 12px;
-
-            border: 1px solid #ccc;
-            border-radius: 8px;
-
-            font-size: 15px;
-
-            margin-bottom: 18px;
-
-            outline: none;
-        }
-
-        input:focus,
-        textarea:focus {
-            border-color: #3478f6;
-            box-shadow: 0 0 0 3px rgba(52, 120, 246, 0.10);
-        }
-
-        textarea {
-            height: 150px;
-            resize: vertical;
-        }
-
-        button {
-            width: 100%;
-
-            padding: 13px;
-
-            border: none;
-            border-radius: 8px;
-
-            background: #3478f6;
-            color: white;
-
-            font-size: 16px;
-            font-weight: bold;
-
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #2563d8;
-        }
-
-        .resultado {
-            margin-top: 15px;
-            text-align: center;
-            color: #555;
-            font-size: 14px;
-        }
-
-        @media (max-width: 600px) {
-            .contacto {
-                padding: 22px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="contacto">
-
-        <h1>Contacta con nosotros</h1>
-
-        <p class="descripcion">
-            ¿Tienes alguna pregunta? Envíanos un mensaje
-            y nos pondremos en contacto contigo.
-        </p>
-
-        <form id="formulario">
-
-            <label for="nombre">
-                Nombre
-            </label>
-
-            <input
-                type="text"
-                id="nombre"
-                placeholder="Tu nombre"
-                required
-            >
-
-
-            <label for="email">
-                Tu correo electrónico
-            </label>
-
-            <input
-                type="email"
-                id="email"
-                placeholder="ejemplo@gmail.com"
-                required
-            >
-
-
-            <label for="asunto">
-                Asunto
-            </label>
-
-            <input
-                type="text"
-                id="asunto"
-                placeholder="¿En qué podemos ayudarte?"
-                required
-            >
-
-
-            <label for="mensaje">
-                Mensaje
-            </label>
-
-            <textarea
-                id="mensaje"
-                placeholder="Escribe aquí tu mensaje..."
-                required
-            ></textarea>
-
-
-            <button type="submit">
-                Enviar mensaje
-            </button>
-
-        </form>
-
-        <div
-            id="resultado"
-            class="resultado"
-        ></div>
-
-    </div>
-
-
-    <script>
-
-        const formulario =
-            document.getElementById("formulario");
-
-        formulario.addEventListener(
-            "submit",
-            function(event) {
-
-                event.preventDefault();
-
-
-                const nombre =
-                    document.getElementById("nombre").value;
-
-                const email =
-                    document.getElementById("email").value;
-
-                const asunto =
-                    document.getElementById("asunto").value;
-
-                const mensaje =
-                    document.getElementById("mensaje").value;
-
-
-                const destinatario =
-                    "othernetes@gmail.com";
-
-
-                const cuerpo =
-                    "Nombre: " + nombre +
-                    "\nCorreo: " + email +
-                    "\n\nMensaje:\n" +
-                    mensaje;
-
-
-                const enlace =
-                    "mailto:" +
-                    destinatario +
-                    "?subject=" +
-                    encodeURIComponent(asunto) +
-                    "&body=" +
-                    encodeURIComponent(cuerpo);
-
-
-                document.getElementById("resultado").textContent =
-                    "Abriendo tu aplicación de correo...";
-
-
-                window.location.href = enlace;
-
-            }
-        );
-
-    </script>
-
-</body>
-</html>
-
-
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contacto · OtherNetES</title>
+        <meta name="description" content="Escribe al equipo de OtherNet. Tu mensaje nos llega directo, sin abrir tu aplicación de correo.">
+        <meta name="theme-color" content="#050506">
+        <link rel="icon" href="logo.png">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+
+        <div class="escena" aria-hidden="true"><i class="barrido"></i></div>
+
+            <main class="tarjeta">
+
+                <!-- Columna de marca -->
+                <aside class="marca">
+                    <span class="hud tl"></span><span class="hud bl"></span>
+
+                    <img class="logo" src="logo.png" alt="Logo de OtherNet" width="151" height="93">
+
+                    <h1>Other<span>NetES</span></h1>
+                    <p class="lema">Redes privadas virtuales hechas por estudiantes, para jugar y trabajar juntos.</p>
+
+                    <ul class="datos">
+                        <li>
+                            <i class="dot"></i>
+                            <div><b>Canal abierto</b><small>Leemos todos los mensajes</small></div>
+                            </li>
+                            <li>
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                                <div><b>Respuesta en 24–48 h</b><small>Por correo, a la dirección que indiques</small></div>
+                                </li>
+                                <li>
+                                    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>
+                                    <div><b>Sin cuentas ni rastreo</b><small>Solo usamos tu correo para contestarte</small></div>
+                                    </li>
+                                </ul>
+
+                                <p class="pie">Producto actual: <b>SkyNet</b></p>
+                            </aside>
+
+                            <!-- Formulario -->
+                            <section class="contenido">
+                                <span class="hud tr"></span><span class="hud br"></span>
+
+                                <form id="formulario" novalidate>
+                                    <h2>Escríbenos</h2>
+                                    <p class="descripcion">Cuéntanos qué necesitas. El mensaje llega directo al equipo.</p>
+
+                                    <input type="checkbox" id="botcheck" tabindex="-1" autocomplete="off" class="trampa" aria-hidden="true">
+
+                                    <fieldset class="tipos">
+                                        <legend>Sobre qué quieres hablar</legend>
+                                        <label><input type="radio" name="tipo" value="Duda" checked><span>Duda</span></label>
+                                        <label><input type="radio" name="tipo" value="Fallo"><span>Fallo</span></label>
+                                        <label><input type="radio" name="tipo" value="Idea"><span>Idea</span></label>
+                                        <label><input type="radio" name="tipo" value="Otro"><span>Otro</span></label>
+                                    </fieldset>
+
+                                    <div class="fila">
+                                        <div class="campo">
+                                            <label for="nombre">Nombre</label>
+                                            <input type="text" id="nombre" placeholder="Cómo te llamas" autocomplete="name" maxlength="80" required>
+                                            <em class="err" data-for="nombre">Escribe tu nombre.</em>
+                                        </div>
+                                        <div class="campo">
+                                            <label for="email">Correo</label>
+                                            <input type="email" id="email" placeholder="tu@correo.com" autocomplete="email" maxlength="120" required>
+                                            <em class="err" data-for="email">Escribe un correo válido.</em>
+                                        </div>
+                                    </div>
+
+                                    <div class="campo">
+                                        <label for="asunto">Asunto</label>
+                                        <input type="text" id="asunto" placeholder="Resume el motivo en una frase" maxlength="120" required>
+                                        <em class="err" data-for="asunto">Escribe un asunto.</em>
+                                    </div>
+
+                                    <div class="campo">
+                                        <label for="mensaje">Mensaje</label>
+                                        <textarea id="mensaje" placeholder="Cuanto más detalle, antes podremos ayudarte. Si es un fallo, indica tu versión de Windows y la versión de SkyNet." maxlength="2000" required></textarea>
+                                        <em class="err" data-for="mensaje">Escribe tu mensaje (mínimo 10 caracteres).</em>
+                                        <span class="contador" id="contador">0 / 2000</span>
+                                    </div>
+
+                                    <button type="submit" id="enviar">
+                                    <span class="txt">Enviar mensaje</span>
+                                    <svg class="flecha" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15M13 6l6 6-6 6"/></svg>
+                                    <span class="spin" aria-hidden="true"></span>
+                                </button>
+
+                                <p class="aviso" id="resultado" role="status" aria-live="polite"></p>
+                            </form>
+
+                            <div class="ok" id="ok" hidden>
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12.5l3 3 5-6"/></svg>
+                                <h2>Mensaje enviado</h2>
+                                <p>Lo hemos recibido. Te contestaremos a <b id="okCorreo"></b> en 24–48 h.</p>
+                                <button type="button" id="otro" class="secundario">Enviar otro mensaje</button>
+                            </div>
+                        </section>
+                    </main>
+
+                    <script src="script.js"></script>
+                </body>
+            </html>
