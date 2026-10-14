@@ -144,10 +144,10 @@ form.addEventListener("submit", async (event: SubmitEvent) => {
         }
 
         okCorreo.textContent = correo;
+        // Mostrar confirmación sin borrar los campos inmediatamente.
+        // El formulario se limpiará cuando el usuario pulse "Enviar otro mensaje".
         form.hidden = true;
         ok.hidden = false;
-        form.reset();
-        contador.textContent = "0 / 2000";
     } catch (error: unknown) {
         let reason = "error inesperado";
         if (error instanceof DOMException && error.name === "AbortError") {
@@ -170,6 +170,9 @@ form.addEventListener("submit", async (event: SubmitEvent) => {
 });
 
 otro.addEventListener("click", () => {
+    form.reset();
+    contador.textContent = "0 / 2000";
+    form.querySelectorAll(".campo").forEach((campo) => campo.classList.remove("mal"));
     ok.hidden = true;
     form.hidden = false;
     mostrarMensaje("");
